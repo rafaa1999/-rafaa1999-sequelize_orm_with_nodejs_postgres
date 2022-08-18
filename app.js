@@ -25,10 +25,27 @@ app.post( '/users', async(req,res) => {
 
 
 
+
+
+app.get('/users',async(req,res)=>{
+
+    try {
+
+        const users = await User.findAll()
+        return res.json(users)
+
+    } catch (error) {
+        
+        console.log(error)
+        return res.status(500).json(error)
+    }
+})
+
+
 app.listen({port:5000},async()=>{
 
     console.log("server is runnning on hhht://localhost:5000")
-     await sequelize.sync({force:true})
-     console.log("database synced !")
+     await sequelize.authenticate({force:true})
+     console.log("database authenticated !")
 })
 

@@ -12,6 +12,12 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
+// function that offers to us that the user couldn't see the id
+    toJSON(){
+      return{...this.get(),id:undefined}
+    }
+
+
   }
   User.init({
     uuid:{
