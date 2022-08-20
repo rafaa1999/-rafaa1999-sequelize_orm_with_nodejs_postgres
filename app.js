@@ -84,6 +84,49 @@ app.get('/post',async(req,res)=>{
 
 })
 
+//delete the user
+app.delete('/users/:uuid',async(req,res)=>{
+    const uuid=req.params.uuid
+    try {
+
+        const user = await User.findOne({
+            where:{uuid},
+        })
+
+        await user.destroy()
+        return res.json({msg:'user deleted!'})
+
+    } catch (error) {
+        
+        console.log(error)
+        return res.status(500).json(error)
+    }
+})
+//update the user
+app.put('/users/:uuid',async(req,res)=>{
+    const{name,email,role}=req.body
+    const uuid=req.params.uuid
+    try {
+
+        const user = await User.findOne( {where:{uuid}})
+
+        user.name=name
+        user.email=email
+        user.role=role
+
+        await user.save()
+
+        
+        return res.json(user)
+
+    } catch (error) {
+        
+        console.log(error)
+        return res.status(500).json(error)
+    }
+})
+
+
 
 
 app.listen({port:5000},async()=>{
